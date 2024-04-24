@@ -26,6 +26,40 @@ class Patient {
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
+
+    /**
+     * Converts a JSON object into a Patient object.
+     * @param {Object} json - The JSON object containing the patient's data.
+     * @returns {Patient} - A new Patient object created from the provided JSON.
+     */
+    static fromJson(json) {
+        return new Patient(
+            json.idPatient,
+            json.firstName,
+            json.lastName,
+            Date.parse(json.birthdate),
+            json.socialSecurityNumber,
+            Date.parse(json.createdAt),
+            Date.parse(json.modifiedAt)
+        );
+    }
+
+    /**
+     * Converts a Patient object into a JSON object.
+     * @param {Patient} patient - The Patient object to be converted to JSON.
+     * @returns {Object} - A new JSON object created from the provided Patient.
+     */
+    static toJson(patient) {
+        return {
+            idPatient: patient.idPatient,
+            firstName: patient.firstName,
+            lastName: patient.lastName,
+            birthdate: patient.birthdate.toISOString(),
+            socialSecurityNumber: patient.socialSecurityNumber,
+            createdAt: patient.createdAt.toISOString(),
+            modifiedAt: patient.modifiedAt.toISOString(),
+        };
+    }
 }
 
 export default Patient;
