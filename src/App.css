@@ -1,6 +1,38 @@
 :root{
-  --color-primary: #00479F,
-  --color-secondary: #1200A9,
-  --color-accent: #009F73,
-  --color-white: #EAEAEA,
+  --color-primary: #00479F;
+  --color-secondary: #1200A9;
+  --color-accent: #009F73;
+  --color-white: #EAEAEA;
+}
+
+.is-color-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.is-color-secondary {
+  background-color: var(--color-secondary) !important;
+}
+
+.is-color-accent {
+  background-color: var(--color-accent) !important;
+}
+
+.is-color-white {
+  background-color: var(--color-white) !important;
+}
+
+.has-text-primary {
+  color: var(--color-primary) !important;
+}
+
+.has-text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.has-text-accent {
+  color: var(--color-accent) !important;
+}
+
+.has-text-white {
+  color: var(--color-white) !important;
 }
