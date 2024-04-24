@@ -1,3 +1,5 @@
+import Service from "./Service";
+
 class Room {
     idRoom;
     number;
@@ -13,6 +15,15 @@ class Room {
         this.idRoom = idRoom;
         this.number = number;
         this.service = service;
+    }
+
+    /**
+     * Converts a JSON object into a Room object.
+     * @param {Object} json - The JSON object containing the room's data.
+     * @returns 
+     */
+    static fromJson(json) {
+        return new Room(json.idRoom, json.number, Service.fromJson(json.service));
     }
 }
 
