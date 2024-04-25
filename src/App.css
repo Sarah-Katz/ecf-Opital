@@ -11,6 +11,10 @@ body{
   color: var(--color-primary);
 }
 
+.has-round-edge {
+  border-radius: 10px;
+}
+
 .is-color-primary {
   background-color: var(--color-primary) !important;
 }

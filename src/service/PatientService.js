@@ -12,6 +12,10 @@ class PatientService {
         return patients;
     }
 
+    static async deletePatient(idPatient) {
+        await axios.delete(import.meta.env.VITE_API_URL + "/patients/" + idPatient);
+    }
+
     static sortPatients(beds, patients) {
         let sortedPatient = [];
         patients.forEach((patient) => {

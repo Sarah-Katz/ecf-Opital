@@ -6,6 +6,11 @@ import PatientService from "../service/PatientService";
 function HomeController() {
     const [sortedPatients, setSortedPatients] = useState([]);
 
+    const deletePatient = async (idPatient) => {
+        await PatientService.deletePatient(idPatient);
+        fetchPatients();
+    };
+
     const updatePatients = (list) => {
         setSortedPatients(list);
     };
@@ -20,7 +25,7 @@ function HomeController() {
         fetchPatients();
     }, []);
 
-    return <>{sortedPatients && <Home patients={sortedPatients} />}</>;
+    return <>{sortedPatients && <Home patients={sortedPatients} callback={deletePatient}/>}</>;
 }
 
 export default HomeController;
