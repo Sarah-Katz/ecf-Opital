@@ -7,10 +7,10 @@ class Bed {
     room;
 
     /**
-     * Creates a new Bed object
-     * @param {number} idBed The bed's id
-     * @param {Patient} patient The patient assigned to this bed
-     * @param {Room} room The room in which the bed is assigned
+     * Creates a new Bed object.
+     * @param {number} idBed - The bed's id.
+     * @param {Patient} patient - The patient assigned to this bed.
+     * @param {Room} room - The room in which the bed is assigned.
      */
     constructor(idBed, patient, room) {
         this.idBed = idBed;
@@ -20,7 +20,7 @@ class Bed {
 
     /**
      * Converts a JSON object into a Bed object.
-     * @param {Object} json - The JSON object containing the bed's data.
+     * @param {object} json - The JSON object containing the bed's data.
      * @returns {Bed} - A new Bed object created from the provided JSON.
      */
     static fromJson(json) {
@@ -37,7 +37,7 @@ class Bed {
     /**
      * Converts a Bed object into a JSON object.
      * @param {Bed} bed - The Bed object to be converted to JSON.
-     * @returns {Object} - A new JSON object created from the provided Bed.
+     * @returns {object} - A new JSON object created from the provided Bed.
      */
     static toJson(bed) {
         return {

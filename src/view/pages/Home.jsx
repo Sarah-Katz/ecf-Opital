@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 function Home({ patients, callback }) {
     const [modalState, setModalState] = useState("");
     const [patientToDelete, setPatientToDelete] = useState(null);

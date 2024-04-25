@@ -6,6 +6,8 @@ import PatientFormController from "./controller/PatientFormController";
 import ServiceDetailController from "./controller/ServiceDetailController";
 import NavBar from "./view/components/NavBar";
 
+
+// eslint-disable-next-line jsdoc/require-jsdoc
 function App() {
     return (
         <BrowserRouter>
