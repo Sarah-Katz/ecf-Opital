@@ -6,16 +6,17 @@ class Patient {
     socialSecurityNumber;
     createdAt;
     modifiedAt;
+    detail;
 
     /**
-     * Creates a new Patient object
-     * @param {number} idPatient The patient's id
-     * @param {string} firstName The patient's first name
-     * @param {string} lastName The patient's last name
-     * @param {Date} birthdate The patient's birthdate
-     * @param {String} socialSecurityNumber The patient's social security number
-     * @param {Date} createdAt The patient's creation date
-     * @param {Date} modifiedAt The patient's last modification date
+     * Creates a new Patient object.
+     * @param {number} idPatient - The patient's id.
+     * @param {string} firstName - The patient's first name.
+     * @param {string} lastName - The patient's last name.
+     * @param {Date} birthdate - The patient's birthdate.
+     * @param {string} socialSecurityNumber - The patient's social security number.
+     * @param {Date} createdAt - The patient's creation date.
+     * @param {Date} modifiedAt - The patient's last modification date.
      */
     constructor(idPatient, firstName, lastName, birthdate, socialSecurityNumber, createdAt, modifiedAt) {
         this.idPatient = idPatient;
@@ -29,10 +30,13 @@ class Patient {
 
     /**
      * Converts a JSON object into a Patient object.
-     * @param {Object} json - The JSON object containing the patient's data.
+     * @param {object} json - The JSON object containing the patient's data.
      * @returns {Patient} - A new Patient object created from the provided JSON.
      */
     static fromJson(json) {
+        if (json === null) {
+            return null;
+        }
         return new Patient(
             json.idPatient,
             json.firstName,
@@ -47,7 +51,7 @@ class Patient {
     /**
      * Converts a Patient object into a JSON object.
      * @param {Patient} patient - The Patient object to be converted to JSON.
-     * @returns {Object} - A new JSON object created from the provided Patient.
+     * @returns {object} - A new JSON object created from the provided Patient.
      */
     static toJson(patient) {
         return {

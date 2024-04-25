@@ -3,6 +3,16 @@
   --color-secondary: #1200A9;
   --color-accent: #009F73;
   --color-white: #EAEAEA;
+  --color-danger: #de0d0d;
+}
+
+body{
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+.has-round-edge {
+  border-radius: 10px;
 }
 
 .is-color-primary {
@@ -21,6 +31,10 @@
   background-color: var(--color-white) !important;
 }
 
+.is-color-danger {
+  background-color: var(--color-danger) !important;
+}
+
 .has-text-primary {
   color: var(--color-primary) !important;
 }
@@ -35,4 +49,8 @@
 
 .has-text-white {
   color: var(--color-white) !important;
+}
+
+.has-text-danger {
+  color: var(--color-danger) !important;
 }
