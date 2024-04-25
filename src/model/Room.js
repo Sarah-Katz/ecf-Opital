@@ -20,10 +20,26 @@ class Room {
     /**
      * Converts a JSON object into a Room object.
      * @param {Object} json - The JSON object containing the room's data.
-     * @returns 
+     * @returns
      */
     static fromJson(json) {
+        if (json === null) {
+            return null;
+        }
         return new Room(json.idRoom, json.number, Service.fromJson(json.service));
+    }
+
+    /**
+     * Converts a Room object into a JSON object.
+     * @param {Room} room - The Room object to be converted to JSON.
+     * @returns {Object} - A new JSON object created from the provided Room.
+     */
+    static toJson(room) {
+        return {
+            idRoom: room.idRoom,
+            number: room.number,
+            service: Service.toJson(room.service),
+        };
     }
 }
 

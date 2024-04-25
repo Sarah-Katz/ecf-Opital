@@ -18,6 +18,9 @@ class Service {
      * @returns {Service} - A new Service object created from the provided JSON.
      */
     static fromJson(json) {
+        if (json === null) {
+            return null;
+        }
         return new Service(json.idService, json.name);
     }
 

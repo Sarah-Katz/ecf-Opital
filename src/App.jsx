@@ -4,10 +4,12 @@ import HomeController from "./controller/HomeController";
 import ServiceController from "./controller/ServiceController";
 import PatientFormController from "./controller/PatientFormController";
 import ServiceDetailController from "./controller/ServiceDetailController";
+import NavBar from "./view/components/NavBar";
 
 function App() {
     return (
         <BrowserRouter>
+            <NavBar />
             <Routes>
                 <Route path='/' element={<HomeController />} />
                 <Route path='/patient/add' element={<PatientFormController />} />

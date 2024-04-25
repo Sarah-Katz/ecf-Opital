@@ -6,6 +6,7 @@ class Patient {
     socialSecurityNumber;
     createdAt;
     modifiedAt;
+    detail;
 
     /**
      * Creates a new Patient object
@@ -33,6 +34,9 @@ class Patient {
      * @returns {Patient} - A new Patient object created from the provided JSON.
      */
     static fromJson(json) {
+        if (json === null) {
+            return null;
+        }
         return new Patient(
             json.idPatient,
             json.firstName,
