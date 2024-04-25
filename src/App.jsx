@@ -13,7 +13,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<HomeController />} />
                 <Route path='/patient/add' element={<PatientFormController />} />
-                <Route path='/patients/:id' element={<PatientFormController />} />
+                <Route path='/patient/:id' element={<PatientFormController />} />
                 <Route path='/services' element={<ServiceController />} />
                 <Route path='services/:id' element={<ServiceDetailController />} />
             </Routes>

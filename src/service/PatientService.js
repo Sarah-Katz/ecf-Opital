@@ -13,7 +13,6 @@ class PatientService {
     }
 
     static sortPatients(beds, patients) {
-        console.log("SORTING");
         let sortedPatient = [];
         patients.forEach((patient) => {
             beds.forEach((bed) => {
@@ -25,7 +24,6 @@ class PatientService {
                 }
             });
         });
-        console.log("SORTED PATIENTS");
         return sortedPatient;
     }
 }

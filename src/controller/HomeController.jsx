@@ -7,9 +7,7 @@ function HomeController() {
     const [sortedPatients, setSortedPatients] = useState([]);
 
     const updatePatients = (list) => {
-        console.log("UPDATING");
         setSortedPatients(list);
-        console.log("UPDATED");
     };
 
     const fetchPatients = async () => {
