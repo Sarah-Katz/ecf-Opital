@@ -72,7 +72,7 @@ function Home({ patients, callback }) {
                                               <footer className='card-footer'>
                                                   <Link
                                                       to={`patient/${patient.idPatient}`}
-                                                      state={patient}
+                                                      state={patient.idPatient}
                                                       className='card-footer-item is-color-secondary has-text-white is-size-5'>
                                                       <div className='icon pr-5'>
                                                           <i className='fas fa-lg fa-pencil'></i>
