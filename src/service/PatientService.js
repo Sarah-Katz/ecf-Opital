@@ -60,6 +60,43 @@ class PatientService {
         });
         return sortedPatient;
     }
+
+    /**
+     * Updates the patient with the provided id.
+     * @param {Patient} patient - The updated patient object.
+     * @returns {Promise<Response>} - A Promise that resolves to the response of the PUT request.
+     */
+    static async updatePatient(patient) {
+        axios
+            .put(import.meta.env.VITE_API_URL + "/patients", Patient.toJson(patient))
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err;
+            });
+    }
+
+    /**
+     * Assigns a service to a patient.
+     * @param {Patient} patient - The patient object.
+     * @param {number} idService - The id of the service to be assigned.
+     * @returns {number} - The status code of the response of the POST request.
+     */
+    static async assignService(patient, idService) {
+        const res = await axios.post(import.meta.env.VITE_API_URL + "/patients/assign/" + idService, patient);
+        return res.status;
+    }
+
+    /**
+     * Unassign a patient from the service.
+     * @param {Patient} patient - The patient object.
+     * @returns {number} - The status code of the response of the POST request.
+     */
+    static async unassignService(patient) {
+        const res = await axios.post(import.meta.env.VITE_API_URL + "/patients/unassign", patient);
+        return res.status;
+    }
 }
 
 export default PatientService;
