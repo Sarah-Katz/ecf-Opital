@@ -1,8 +1,14 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 function Home({ patients, callback }) {
+    Home.propTypes = {
+        patients: PropTypes.arrayOf(PropTypes.object).isRequired,
+        callback: PropTypes.func.isRequired,
+    };
+
     const [modalState, setModalState] = useState("");
     const [patientToDelete, setPatientToDelete] = useState(null);
 
@@ -36,7 +42,7 @@ function Home({ patients, callback }) {
                                   return (
                                       <div key={index} className='column is-5'>
                                           <div className='card p-5 is-color-accent'>
-                                              <div className='card-content'>
+                                              <div className='card-content pt-1'>
                                                   <p className='title is-3 mb-1'>
                                                       <span className='icon mr-2'>
                                                           <i className='fas fa-sm fa-user'></i>
@@ -64,8 +70,9 @@ function Home({ patients, callback }) {
                                                       <p className='subtitle is-4 has-text-white'>
                                                           <span className='icon mr-2'>
                                                               <i className='fas fa-sm fa-exclamation-triangle'></i>{" "}
-                                                          </span>{/* */}
-                                                          Le.a patient.e n&aposest pas assigné.e à un service
+                                                          </span>
+                                                          {/* */}
+                                                          Le.a patient.e n&apos;est pas assigné.e à un service
                                                       </p>
                                                   )}
                                               </div>

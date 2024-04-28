@@ -38,6 +38,7 @@ function HomeController() {
     };
 
     useEffect(() => {
+        document.title = "Opital - Liste des patients";
         fetchPatients();
     }, []);
 
