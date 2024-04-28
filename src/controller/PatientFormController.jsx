@@ -1,25 +1,32 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PatientForm from "../view/pages/PatientForm";
 import PatientService from "../service/PatientService";
+import ServiceService from "../service/ServiceService";
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 function PatientFormController() {
     const params = useParams();
-    const [patient, setPatient] = useState(null);
+    const [data, setData] = useState([]);
 
-    const fetchPatient = async () => {
-        console.log("idPatient", params.id);
-        const patientData = await PatientService.getPatient(12);
-        console.log(patientData);
-        //setPatient(patientData);
+    const updateData = (newData) => {
+        setData(newData);
+    };
+
+    const fetchData = async () => {
+        const patientData = await PatientService.getPatient(params.id);
+        const servicesData = await ServiceService.getServices();
+        updateData([patientData, servicesData]);
     };
 
     useEffect(() => {
-        fetchPatient();
+        fetchData();
     }, []);
 
-    return <PatientForm patient={patient} />;
+    useEffect(() => {
+    }, [data]);
+
+    return <PatientForm data={data} />;
 }
 
 export default PatientFormController;

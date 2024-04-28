@@ -18,15 +18,14 @@ class PatientService {
     }
 
     /**
-     *
-     * @param {Patient} idPatient - The id of the patient to be fetched.
+     * Fetches the patient with the provided id from the API.
+     * @param {number} idPatient - The id of the patient to be fetched.
      * @returns {Patient} - A Patient object.
      */
     static async getPatient(idPatient) {
         const res = await axios.get(import.meta.env.VITE_API_URL + "/patients/" + idPatient);
         const patient = Patient.fromJson(res.data);
         const bedRes = await axios.get(import.meta.env.VITE_API_URL + "/beds/byPatient/" + idPatient);
-        console.log("bedRes", bedRes);
         if (bedRes.data !== "") {
             patient.detail = new Detail(bedRes.data, bedRes.data.room, bedRes.data.room.service);
         }

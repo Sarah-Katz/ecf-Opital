@@ -6,9 +6,8 @@
   --color-danger: #de0d0d;
 }
 
-body{
+html{
   background-color: var(--color-white);
-  color: var(--color-primary);
 }
 
 .has-round-edge {

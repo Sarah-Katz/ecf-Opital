@@ -65,7 +65,7 @@ function Home({ patients, callback }) {
                                                           <span className='icon mr-2'>
                                                               <i className='fas fa-sm fa-exclamation-triangle'></i>{" "}
                                                           </span>{/* */}
-                                                          Le.a patient.e n'est pas assigné.e à un service
+                                                          Le.a patient.e n&aposest pas assigné.e à un service
                                                       </p>
                                                   )}
                                               </div>
