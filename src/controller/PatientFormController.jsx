@@ -9,6 +9,10 @@ function PatientFormController() {
     const params = useParams();
     const [data, setData] = useState([]);
 
+    const createPatient = (patient) => {
+        return PatientService.createPatient(patient);
+    };
+
     const updatePatient = (patient) => {
         return PatientService.updatePatient(patient);
     };
@@ -33,7 +37,9 @@ function PatientFormController() {
     };
 
     useEffect(() => {
-        fetchData();
+        if (params.id) {
+            fetchData();
+        }
     }, []);
 
     useEffect(() => {}, [data]);
@@ -41,9 +47,11 @@ function PatientFormController() {
     return (
         <PatientForm
             data={data}
+            createCallback={createPatient}
             updateCallback={updatePatient}
             assignCallback={assignService}
             unassignCallback={unassignService}
+            refreshDataCallback={fetchData}
         />
     );
 }

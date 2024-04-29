@@ -28,8 +28,17 @@ function Home({ patients, callback }) {
     };
 
     return (
-        <div className='mt-6'>
+        <div className='mt-5'>
+            {" "}
             <div className='columns is-centered'>
+                <Link className='button is-color-secondary has-text-white is-size-5' to={"/patient/add"}>
+                    <div className='icon pl-3 pr-5'>
+                        <i className='fas fa-lg fa-plus'></i>
+                    </div>
+                    Ajouter un patient
+                </Link>
+            </div>
+            <div className='columns is-centered is-multiline'>
                 <div className='column is-10'>
                     <div className='columns is-centered is-multiline px-5'>
                         {patients

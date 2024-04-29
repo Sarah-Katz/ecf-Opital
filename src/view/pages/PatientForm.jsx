@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Patient from "../../model/Patient";
+import { redirect, useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-function PatientForm({ data, updateCallback, assignCallback, unassignCallback }) {
+function PatientForm({ data, createCallback, updateCallback, assignCallback, unassignCallback, refreshDataCallback }) {
     PatientForm.propTypes = {
         data: PropTypes.shape({
             idPatient: PropTypes.number,
@@ -18,15 +19,18 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
                 })
             ),
         }),
+        createCallback: PropTypes.func,
         updateCallback: PropTypes.func,
         assignCallback: PropTypes.func,
         unassignCallback: PropTypes.func,
+        refreshDataCallback: PropTypes.func,
     };
 
     const [formData, setFormData] = useState({ firstName: "", lastName: "", birthdate: "", ssn: "" });
     const [error, setError] = useState("");
     const [modalState, setModalState] = useState("");
     const [assignedService, setAssignedService] = useState();
+    const isCreation = !data[0];
 
     useEffect(() => {
         if (data[0]?.idPatient) {
@@ -34,7 +38,6 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
         } else {
             document.title = "Opital - Nouveau patient";
         }
-        setAssignedService(data[0]?.detail?.service.idService);
         setFormData({
             firstName: data[0]?.firstName,
             lastName: data[0]?.lastName,
@@ -49,6 +52,7 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
             setError("Patient.e correctement désassigné.e du service.");
             setAssignedService(0);
             showErrorModal();
+            refreshDataCallback();
         } else {
             const res = await assignCallback(data[0], idService);
             if (res === 200) {
@@ -58,6 +62,7 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
                 setError("Aucun lit n'est disponible pour ce service");
             }
             showErrorModal();
+            refreshDataCallback();
         }
     };
 
@@ -90,6 +95,22 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
         setModalState("");
     };
 
+    const handleSubmit = (updatedPatient) => {
+        if (isCreation) {
+            const res = createCallback(Patient.fromJson(updatedPatient));
+            if (res) {
+                setError("Patient.e correctement créé.e");
+            }
+        } else {
+            const res = updateCallback(Patient.fromJson(updatedPatient));
+            if (res) {
+                setError("Patient mis à jour avec succès");
+            }
+        }
+    };
+
+    const redirect = useNavigate("/");
+
     const checkErrors = (e) => {
         e.preventDefault();
         const errors = {};
@@ -118,13 +139,10 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
                 lastName: formData.lastName,
                 birthdate: new Date(formData.birthdate).toISOString(),
                 socialSecurityNumber: formData.ssn,
-                createdAt: new Date(data[0].createdAt).toISOString(),
+                createdAt: data[0] != undefined ? new Date(data[0].createdAt).toISOString() : new Date().toISOString(),
             };
-            const res = updateCallback(Patient.fromJson(updatedPatient));
-            if (res) {
-                setError("Patient mis à jour avec succès");
-                showErrorModal();
-            }
+            handleSubmit(updatedPatient);
+            showErrorModal();
         } else {
             setError(Object.values(errors).join("\n - "));
             showErrorModal();
@@ -184,7 +202,8 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
                                         className='input'
                                         id='birthdate'
                                         type='date'
-                                        value={data[0] != undefined ? formData.birthdate : ""}
+                                        max={new Date().toISOString().split("T")[0]}
+                                        value={formData.birthdate}
                                         onChange={handleChange}
                                     />
                                 </div>
@@ -204,55 +223,57 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
                         </div>
                     </div>
                 </div>
-                <div className='level'>
-                    <div className='level-left'>
-                        <div className='level-item'>
-                            <div className='field'>
-                                <label className='label' htmlFor='service'>
-                                    Service
-                                </label>
-                                <div className='control'>
-                                    <div className='select'>
-                                        <select id='service' value={assignedService} onChange={handleChange}>
-                                            <option value={0}>{"Aucun service assigné"}</option>
-                                            {data[1]?.map((service) => {
-                                                return (
-                                                    <option key={service.idService} value={service.idService}>
-                                                        {service.name}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
+                {!isCreation && (
+                    <div className='level'>
+                        <div className='level-left'>
+                            <div className='level-item'>
+                                <div className='field'>
+                                    <label className='label' htmlFor='service'>
+                                        Service
+                                    </label>
+                                    <div className='control'>
+                                        <div className='select'>
+                                            <select id='service' value={assignedService} onChange={handleChange}>
+                                                <option value={0}>{"Aucun service assigné"}</option>
+                                                {data[1]?.map((service) => {
+                                                    return (
+                                                        <option key={service.idService} value={service.idService}>
+                                                            {service.name}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='level-right'>
+                            <div className='level-item'>
+                                <div className='field'>
+                                    <label htmlFor='room' className='label'>
+                                        N° de Chambre
+                                    </label>
+                                    <div className='control'>
+                                        <input
+                                            disabled
+                                            type='text'
+                                            id='room'
+                                            className='input'
+                                            value={data[0]?.detail?.room.number || "Aucune chambre assignée"}
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className='level-right'>
-                        <div className='level-item'>
-                            <div className='field'>
-                                <label htmlFor='room' className='label'>
-                                    N° de Chambre
-                                </label>
-                                <div className='control'>
-                                    <input
-                                        disabled
-                                        type='text'
-                                        id='room'
-                                        className='input'
-                                        value={data[0]?.detail?.room.number || "Aucune chambre assignée"}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                )}
                 <div className='control'>
                     <button className='button is-color-secondary has-text-white' onClick={checkErrors}>
                         <div className='icon p-3 mr-2'>
                             <i className='fas fa-pencil'></i>
                         </div>
-                        Mettre à jour le patient
+                        {isCreation ? "Ajouter un.e patient.e" : "Mettre à jour le.a patient.e"}
                     </button>
                 </div>
             </form>
@@ -262,9 +283,15 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
                     <div className='content p-5'>
                         <p className='title is-4 has-text-weight-semibold has-text-white'>{error}</p>
                         <div className='buttons is-centered'>
-                            <button className='button is-color-accent has-text-white' onClick={closeModal}>
-                                OK
-                            </button>
+                            {isCreation ? (
+                                <button className='button is-color-accent has-text-white' onClick={closeModal}>
+                                    OK
+                                </button>
+                            ) : (
+                                <button className='button is-color-accent has-text-white' onClick={redirect}>
+                                    Retour à la liste des patients
+                                </button>
+                            )}
                         </div>
                     </div>
                     <button className='modal-close is-large' aria-label='close' onClick={() => closeModal()}></button>

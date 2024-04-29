@@ -62,6 +62,22 @@ class PatientService {
     }
 
     /**
+     * Creates a new patient.
+     * @param {Patient} patient - The patient object.
+     * @returns {Promise<Response>} - A Promise that resolves to the response of the POST request.
+     */
+    static async createPatient(patient) {
+        axios
+            .post(import.meta.env.VITE_API_URL + "/patients", Patient.toJson(patient))
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err;
+            });
+    }
+
+    /**
      * Updates the patient with the provided id.
      * @param {Patient} patient - The updated patient object.
      * @returns {Promise<Response>} - A Promise that resolves to the response of the PUT request.
