@@ -17,16 +17,6 @@ function NavBar() {
                     </span>
                 </Link>
             </div>
-            <div className='column is-1 pt-3 pb-0'>
-                <Link className='navbar-item' to={"services"}>
-                    <span className='icon-text has-text-white'>
-                        <span className='icon'>
-                            <i className='fas fa-xl fa-square-h'></i>
-                        </span>
-                        <span className='has-text-weight-semibold'>Services</span>
-                    </span>
-                </Link>
-            </div>
         </nav>
     );
 }
