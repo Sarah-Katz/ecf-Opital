@@ -47,11 +47,16 @@ function PatientForm({ data, updateCallback, assignCallback, unassignCallback })
         if (idService === "0") {
             unassignCallback(data[0], idService);
             setError("Patient.e correctement désassigné.e du service.");
+            setAssignedService(0);
             showErrorModal();
         } else {
             const res = await assignCallback(data[0], idService);
-            console.log(res);
-            setError(res === 200 ? "Patient.e correctement assigné.e au service" : "Aucun lit n'est disponible pour ce service");
+            if (res === 200) {
+                setError("Patient.e correctement assigné.e au service");
+                setAssignedService(idService);
+            } else {
+                setError("Aucun lit n'est disponible pour ce service");
+            }
             showErrorModal();
         }
     };
