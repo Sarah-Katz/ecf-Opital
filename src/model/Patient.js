@@ -58,10 +58,10 @@ class Patient {
             idPatient: patient.idPatient,
             firstName: patient.firstName,
             lastName: patient.lastName,
-            birthdate: patient.birthdate.toISOString(),
+            birthdate: new Date(patient.birthdate).toISOString(),
             socialSecurityNumber: patient.socialSecurityNumber,
-            createdAt: patient.createdAt.toISOString(),
-            modifiedAt: patient.modifiedAt.toISOString(),
+            createdAt: new Date(patient.createdAt).toISOString(),
+            modifiedAt: patient.modifiedAt ? new Date(patient.modifiedAt).toISOString() : null,
         };
     }
 }

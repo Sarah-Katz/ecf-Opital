@@ -18,6 +18,21 @@ class PatientService {
     }
 
     /**
+     * Fetches the patient with the provided id from the API.
+     * @param {number} idPatient - The id of the patient to be fetched.
+     * @returns {Patient} - A Patient object.
+     */
+    static async getPatient(idPatient) {
+        const res = await axios.get(import.meta.env.VITE_API_URL + "/patients/" + idPatient);
+        const patient = Patient.fromJson(res.data);
+        const bedRes = await axios.get(import.meta.env.VITE_API_URL + "/beds/byPatient/" + idPatient);
+        if (bedRes.data !== "") {
+            patient.detail = new Detail(bedRes.data, bedRes.data.room, bedRes.data.room.service);
+        }
+        return patient;
+    }
+
+    /**
      * Deletes the patient with the provided id.
      * @param {number} idPatient - The id of the patient to be deleted.
      */
@@ -44,6 +59,59 @@ class PatientService {
             });
         });
         return sortedPatient;
+    }
+
+    /**
+     * Creates a new patient.
+     * @param {Patient} patient - The patient object.
+     * @returns {Promise<Response>} - A Promise that resolves to the response of the POST request.
+     */
+    static async createPatient(patient) {
+        axios
+            .post(import.meta.env.VITE_API_URL + "/patients", Patient.toJson(patient))
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err;
+            });
+    }
+
+    /**
+     * Updates the patient with the provided id.
+     * @param {Patient} patient - The updated patient object.
+     * @returns {Promise<Response>} - A Promise that resolves to the response of the PUT request.
+     */
+    static async updatePatient(patient) {
+        axios
+            .put(import.meta.env.VITE_API_URL + "/patients", Patient.toJson(patient))
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                return err;
+            });
+    }
+
+    /**
+     * Assigns a service to a patient.
+     * @param {Patient} patient - The patient object.
+     * @param {number} idService - The id of the service to be assigned.
+     * @returns {number} - The status code of the response of the POST request.
+     */
+    static async assignService(patient, idService) {
+        const res = await axios.post(import.meta.env.VITE_API_URL + "/patients/assign/" + idService, patient);
+        return res.status;
+    }
+
+    /**
+     * Unassign a patient from the service.
+     * @param {Patient} patient - The patient object.
+     * @returns {number} - The status code of the response of the POST request.
+     */
+    static async unassignService(patient) {
+        const res = await axios.post(import.meta.env.VITE_API_URL + "/patients/unassign", patient);
+        return res.status;
     }
 }
 
