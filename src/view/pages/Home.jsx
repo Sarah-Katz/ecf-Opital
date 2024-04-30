@@ -30,7 +30,7 @@ function Home({ patients, callback }) {
     return (
         <div className='mt-5'>
             {" "}
-            <div className='columns is-centered'>
+            <div className='columns is-centered is-mobile'>
                 <Link className='button is-color-secondary has-text-white is-size-5' to={"/patient/add"}>
                     <div className='icon pl-3 pr-5'>
                         <i className='fas fa-lg fa-plus'></i>
