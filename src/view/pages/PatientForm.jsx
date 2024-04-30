@@ -109,7 +109,7 @@ function PatientForm({ data, createCallback, updateCallback, assignCallback, una
         }
     };
 
-    const redirect = useNavigate("/");
+    const redirect = useNavigate("");
 
     const checkErrors = (e) => {
         e.preventDefault();
@@ -283,15 +283,9 @@ function PatientForm({ data, createCallback, updateCallback, assignCallback, una
                     <div className='content p-5'>
                         <p className='title is-4 has-text-weight-semibold has-text-white'>{error}</p>
                         <div className='buttons is-centered'>
-                            {isCreation ? (
-                                <button className='button is-color-accent has-text-white' onClick={closeModal}>
-                                    OK
-                                </button>
-                            ) : (
-                                <button className='button is-color-accent has-text-white' onClick={redirect}>
-                                    Retour à la liste des patients
-                                </button>
-                            )}
+                            <button className='button is-color-accent has-text-white' onClick={closeModal}>
+                                OK
+                            </button>
                         </div>
                     </div>
                     <button className='modal-close is-large' aria-label='close' onClick={() => closeModal()}></button>
